@@ -3,17 +3,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-
+namespace WRX
+{ 
     /// <summary>
     /// 抽卡系統
     /// </summary>
     public class DrawingCardGame : MonoBehaviour
     {
+        private GUIStyle labelStyle;
+        private GUIStyle labelStyle1;
+        private GUIStyle labelStyle2;
+
         /// <summary>
         /// 顯示訊息的文字
         /// </summary>
-        private string message1 = "<color=#FFA500>             目標\nEX (0.001%的機率) !!!</color>";
-        private string message = "請開始你的旅程\n希望1000次以內抽取EX";
+        private string message1 = "<color=#FFA500>              目標\nEX (0.00001%的機率) !!!</color>";
+        private string message = " ";
 
 
         /// <summary>
@@ -21,6 +26,8 @@ using UnityEngine.SceneManagement;
         /// </summary>
         private bool GetCardButton = true;
         private bool SaveAndLeaveGameButton = true;
+        private bool EndGameButton = false;
+
 
 
         /// <summary>
@@ -29,22 +36,22 @@ using UnityEngine.SceneManagement;
         protected void OnGUI()
         {
             // 顯示抽卡結果訊息
-            GUI.Label(new Rect(30, 50, 400, 500), message1);
-            GUI.Label(new Rect(110, 170, 400, 500), message);
+            GUI.Label(new Rect(400, 100, 400, 500), message1, labelStyle1);
+            GUI.Label(new Rect(520, 300, 400, 500), message, labelStyle2);
 
             // 顯示抽卡統計資訊
-            GUI.Label(new Rect(180, 0, 400, 20), $"總抽卡次數: {totalDraws}");
-            GUI.Label(new Rect(180, 20, 400, 20), $"<color=#FFA500>EX卡片(0.001%的機率): {EXCardCount} 次</color>");
-            GUI.Label(new Rect(180, 40, 400, 20), $"<color=#800080>S卡片 (10%的機率): {SCardCount} 次</color>");
-            GUI.Label(new Rect(180, 60, 400, 20), $"<color=#0000FF>R卡片 (20%的機率): {RCardCount} 次</color>");
-            GUI.Label(new Rect(180, 80, 400, 20), $"<color=#00FF00>F卡片 (40%的機率): {FCardCount} 次</color>");
-            GUI.Label(new Rect(180, 100, 400, 20), $"<color=#808080>N卡片 (45%的機率): {NCardCount} 次</color>");
+            GUI.Label(new Rect(750, 260, 400, 20), $"<color=#FFFFFF>總抽卡次數: {totalDraws} 次</color>", labelStyle);
+            GUI.Label(new Rect(750, 310, 400, 20), $"<color=#FFA500>EX卡片(0.001%的機率): {EXCardCount} 次</color>", labelStyle);
+            GUI.Label(new Rect(750, 360, 400, 20), $"<color=#800080>S卡片 (10%的機率): {SCardCount} 次</color>", labelStyle);
+            GUI.Label(new Rect(750, 410, 400, 20), $"<color=#0000FF>R卡片 (20%的機率): {RCardCount} 次</color>", labelStyle);
+            GUI.Label(new Rect(750, 460, 400, 20), $"<color=#00FF00>F卡片 (40%的機率): {FCardCount} 次</color>", labelStyle);
+            GUI.Label(new Rect(750, 510, 400, 20), $"<color=#808080>N卡片 (45%的機率): {NCardCount} 次</color>", labelStyle);
 
 
             // "抽卡" 按鈕
             if (GetCardButton)
             {
-                if (GUI.Button(new Rect(130, 260, 100, 50), "抽卡"))
+                if (GUI.Button(new Rect(500, 440, 100, 50), "抽卡"))
                 {
                     // 點擊後抽卡
                     GetCard();
@@ -54,13 +61,22 @@ using UnityEngine.SceneManagement;
             // "存檔並離開遊戲" 按鈕
             if (SaveAndLeaveGameButton)
             {
-                if (GUI.Button(new Rect(210, 330, 150, 30), "存檔並回到主選單"))
+                if (GUI.Button(new Rect(470, 510, 150, 50), "存檔並回到主選單"))
                 {
                     SaveGameProgress();    // 存檔
                     SceneManager.LoadScene("主選單");  // 回到主選單
                 }
             }
-        }
+            // 離開遊戲
+            if (EndGameButton)
+            {
+                if (GUI.Button(new Rect(500, 440, 100, 50), "離開遊戲"))
+                {
+                    // 當玩家點擊結束遊戲按鈕時，結束遊戲
+                    Application.Quit();
+                }
+            }
+    }
 
 
         /// <summary>
@@ -69,6 +85,14 @@ using UnityEngine.SceneManagement;
         private void Start()
         {
             LoadGameProgress();
+
+            labelStyle = new GUIStyle();
+            labelStyle1 = new GUIStyle();
+            labelStyle2 = new GUIStyle();
+
+            labelStyle.fontSize = 30;
+            labelStyle1.fontSize = 50;
+            labelStyle2.fontSize = 100;
         }
 
 
@@ -110,7 +134,7 @@ using UnityEngine.SceneManagement;
         /// </summary>
         private void GetCard()
         {
-            int randomNumber = Random.Range(1, 200200);
+            int randomNumber = Random.Range(1, 200002);
             Range(randomNumber);
         }
 
@@ -127,30 +151,32 @@ using UnityEngine.SceneManagement;
             if (range >= 200000)
             {
                 EXCardCount++;
-                message = "<color=#FFA500>獲取卡片\n            EX\n恭喜通關遊戲!!!<color>";
+                message = "<color=#FFA500>EX\n恭喜通關遊戲!!!<color>";
+                GetCardButton = false;
+                EndGameButton = true;
             }
 
             else if (range >= 190000 && range < 200000)
             {
                 SCardCount++;
-                message = "<color=#800080>獲取卡片\n            S\n差一點了!!!</color>";
+                message = "<color=#800080>S</color>";
             }
 
             else if (range >= 170000 && range < 190000)
             {
                 RCardCount++;
-                message = "<color=#0000FF>獲取卡片\n            R\n還可以還可以!!!</color>";
+                message = "<color=#0000FF>R</color>";
             }
 
             else if (range >= 90000 && range < 170000)
             {
                 FCardCount++;
-                message = "<color=#00FF00>獲取卡片\n            F\n比非洲人好一點而已~~<color>";
+                message = "<color=#00FF00>F<color>";
             }
             else if (range >= 1 && range < 90000)
             {
                 NCardCount++;
-                message = "<color=#808080>獲取卡片\n            N\n非洲人~~~\n跟你的人生一樣~~~<color>";
+                message = "<color=#808080>N<color>";
             }
         }
 
@@ -169,5 +195,6 @@ using UnityEngine.SceneManagement;
             PlayerPrefs.Save();  // 確保資料被儲存
         }
     }
+}
 
 
