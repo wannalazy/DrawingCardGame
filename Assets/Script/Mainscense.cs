@@ -22,7 +22,7 @@ public class Mainscense : MonoBehaviour
         // 開始新遊戲
         if (StartNewGameButton) 
         {
-            if (GUI.Button(new Rect(590, 260, 100, 30), "開始新遊戲"))
+            if (GUI.Button(new Rect(590, 260, 100, 30), "New Game"))
             {
                 // 當玩家點擊開始新遊戲按鈕時，刪除存檔並切換場景至遊戲場景
                 PlayerPrefs.DeleteAll(); 
@@ -33,7 +33,7 @@ public class Mainscense : MonoBehaviour
        // 繼續遊戲
        if (CoutinueGameButton)
        {
-            if (GUI.Button(new Rect(590, 310, 100, 30), "繼續遊戲"))
+            if (GUI.Button(new Rect(590, 310, 100, 30), "continue"))
             {
                 //aud.PlayOneShot(soundClick);
                 StartGame();
@@ -43,7 +43,7 @@ public class Mainscense : MonoBehaviour
        // 離開遊戲
        if (EndGameButton)
        {
-            if (GUI.Button(new Rect(590, 360, 100, 30), "離開遊戲"))
+            if (GUI.Button(new Rect(590, 360, 100, 30), "leave"))
            {
                 // 當玩家點擊結束遊戲按鈕時，結束遊戲
                 Application.Quit();

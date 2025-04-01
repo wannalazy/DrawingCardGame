@@ -17,7 +17,7 @@ namespace WRX
         /// <summary>
         /// 顯示訊息的文字
         /// </summary>
-        private string message1 = "<color=#FFA500>              目標\nEX (0.00001%的機率) !!!</color>";
+        private string message1 = "<color=#FFA500>              目標\nEX (0.00001%Probability) !!!</color>";
         private string message = " ";
 
 
@@ -40,18 +40,18 @@ namespace WRX
             GUI.Label(new Rect(520, 300, 400, 500), message, labelStyle2);
 
             // 顯示抽卡統計資訊
-            GUI.Label(new Rect(750, 260, 400, 20), $"<color=#FFFFFF>總抽卡次數: {totalDraws} 次</color>", labelStyle);
-            GUI.Label(new Rect(750, 310, 400, 20), $"<color=#FFA500>EX卡片(0.001%的機率): {EXCardCount} 次</color>", labelStyle);
-            GUI.Label(new Rect(750, 360, 400, 20), $"<color=#800080>S卡片 (10%的機率): {SCardCount} 次</color>", labelStyle);
-            GUI.Label(new Rect(750, 410, 400, 20), $"<color=#0000FF>R卡片 (20%的機率): {RCardCount} 次</color>", labelStyle);
-            GUI.Label(new Rect(750, 460, 400, 20), $"<color=#00FF00>F卡片 (40%的機率): {FCardCount} 次</color>", labelStyle);
-            GUI.Label(new Rect(750, 510, 400, 20), $"<color=#808080>N卡片 (45%的機率): {NCardCount} 次</color>", labelStyle);
+            GUI.Label(new Rect(750, 260, 400, 20), $"<color=#FFFFFF>totalDraws: {totalDraws} 次</color>", labelStyle);
+            GUI.Label(new Rect(750, 310, 400, 20), $"<color=#FFA500>EXcard(0.001%Probability): {EXCardCount} </color>", labelStyle);
+            GUI.Label(new Rect(750, 360, 400, 20), $"<color=#800080>Scard (10%Probability): {SCardCount} </color>", labelStyle);
+            GUI.Label(new Rect(750, 410, 400, 20), $"<color=#0000FF>Rcard (20%Probability): {RCardCount} </color>", labelStyle);
+            GUI.Label(new Rect(750, 460, 400, 20), $"<color=#00FF00>Fcard (40%Probability): {FCardCount} </color>", labelStyle);
+            GUI.Label(new Rect(750, 510, 400, 20), $"<color=#808080>Ncard (45%Probability): {NCardCount} </color>", labelStyle);
 
 
             // "抽卡" 按鈕
             if (GetCardButton)
             {
-                if (GUI.Button(new Rect(500, 440, 100, 50), "抽卡"))
+                if (GUI.Button(new Rect(500, 440, 100, 50), "Drawcards"))
                 {
                     // 點擊後抽卡
                     GetCard();
@@ -61,7 +61,7 @@ namespace WRX
             // "存檔並離開遊戲" 按鈕
             if (SaveAndLeaveGameButton)
             {
-                if (GUI.Button(new Rect(470, 510, 150, 50), "存檔並回到主選單"))
+                if (GUI.Button(new Rect(470, 510, 150, 50), "saveandleave"))
                 {
                     SaveGameProgress();    // 存檔
                     SceneManager.LoadScene("主選單");  // 回到主選單
@@ -70,7 +70,7 @@ namespace WRX
             // 離開遊戲
             if (EndGameButton)
             {
-                if (GUI.Button(new Rect(500, 440, 100, 50), "離開遊戲"))
+                if (GUI.Button(new Rect(500, 440, 100, 50), "leave"))
                 {
                     // 當玩家點擊結束遊戲按鈕時，結束遊戲
                     Application.Quit();
@@ -151,7 +151,7 @@ namespace WRX
             if (range >= 200000)
             {
                 EXCardCount++;
-                message = "<color=#FFA500>EX\n恭喜通關遊戲!!!<color>";
+                message = "<color=#FFA500>EX\nCongratulations!!!<color>";
                 GetCardButton = false;
                 EndGameButton = true;
             }
